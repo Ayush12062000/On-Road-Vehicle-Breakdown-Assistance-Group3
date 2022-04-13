@@ -20,31 +20,31 @@ import com.VehicleBreakdown.Assistance.service.UserService;
 import io.swagger.models.Response;
 
 @RestController
-@RequestMapping("/userapi")
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/user/new")
+	@PostMapping("/new")
 	public User userRegistration(@Valid @RequestBody User user) {
 		return userService.userRegistration(user);
 	}
 	
-	@GetMapping("/user/all")
+	@GetMapping("/all")
 	public List<User> getAllUsers()
 	{
 		return userService.getAllUsers();
 	}
 	
-	@GetMapping("/user/byid/{id}")
+	@GetMapping("/byid/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable(value="id") Long userId)
 	{
 		User user = userService.getUserById(userId).orElse(null);
 		return ResponseEntity.ok().body(user);
 	}
 	
-	@PutMapping("/user/update/byid/{id}")
+	@PutMapping("/update/byid/{id}")
 	public ResponseEntity<User> updateUserById(@PathVariable(value="id") Long userId,@Valid @RequestBody User userinfo)
 	{
 		User user = userService.getUserById(userId).orElse(null);
