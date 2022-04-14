@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.VehicleBreakdown.Assistance.exception.AdminNotFoundException;
+import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Status;
 import com.VehicleBreakdown.Assistance.model.User;
@@ -29,20 +30,16 @@ public class AdminController {
 	public AdminRepository adminRepository;
 	
 	@PostMapping("/register")
-    public ResponseEntity<Admin> registerAdmin(@Valid @RequestBody Admin newAdmin) {
+    public Status registerAdmin(@Valid @RequestBody Admin newAdmin) {
         List<Admin> admins = adminRepository.findAll();
-        System.out.println("New admin: " + newAdmin.toString());
         for (Admin admin : admins) {
-            System.out.println("Registered admin: " + newAdmin.toString());
             if (admin.equals(newAdmin)) {
-                //System.out.println("Admin Already exists!");
-                System.out.println( Status.USER_ALREADY_EXISTS);
-                return ResponseEntity.ok().body(newAdmin);
+                return Status.USER_ALREADY_EXISTS;
             }
         }
         adminRepository.save(newAdmin);
-        System.out.println(Status.SUCCESS);
-        return ResponseEntity.ok().body(newAdmin);
+        return Status.SUCCESS;
+        
     }
     
     @PostMapping("/login")
@@ -67,6 +64,8 @@ public class AdminController {
         for (Admin other : admins) {
             if (other.equals(admin)) {
             	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+            	if(!adm.isLoggedIn())
+            		return Status.FAILURE;
             	adm.setUsername(admin.getUsername());
             	adm.setPassword(admin.getPassword());
             	adm.setLoggedIn(false);
@@ -77,8 +76,11 @@ public class AdminController {
         return Status.FAILURE;
     }
 	
-	@GetMapping("/users/all")
-	public List<User> getAllUsers(){
-		return adminService.getAllUsers();
+    @GetMapping("/login/showusers")
+	public List<User> getAllUsers(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
+		if(loginAdmin(admin)==Status.SUCCESS)
+			return adminService.getAllUsers();
+		else
+			throw new InvalidLoginException("Invalid Login");
 	}
 }
