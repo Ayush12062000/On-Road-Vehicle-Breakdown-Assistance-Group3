@@ -48,6 +48,8 @@ public class AdminController {
         for (Admin other : admins) {
             if (other.equals(admin)) {
             	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+            	if(adm.isLoggedIn())
+            		return Status.FAILURE;
             	adm.setUsername(admin.getUsername());
             	adm.setPassword(admin.getPassword());
             	adm.setLoggedIn(true);
@@ -78,9 +80,18 @@ public class AdminController {
 	
     @GetMapping("/login/showusers")
 	public List<User> getAllUsers(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
-		if(loginAdmin(admin)==Status.SUCCESS)
-			return adminService.getAllUsers();
-		else
-			throw new InvalidLoginException("Invalid Login");
+    	List<Admin> admins = adminRepository.findAll();
+        for (Admin other : admins) {
+            if (other.equals(admin)) {
+            	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+            	if(adm.isLoggedIn())
+            		return adminService.getAllUsers();
+            	else 
+            		throw new InvalidLoginException("Login Required");
+            }
+            else
+            	throw new InvalidLoginException("Invalid Login Credentials");
+        }
+        throw new AdminNotFoundException("No Database found");
 	}
 }
