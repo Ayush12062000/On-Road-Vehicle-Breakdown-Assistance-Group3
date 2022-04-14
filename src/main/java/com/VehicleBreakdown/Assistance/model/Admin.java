@@ -4,16 +4,25 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Admin {
-	private @Id @GeneratedValue long id;
-    private @NotBlank String username;
-    private @NotBlank String password;
-    private @NotNull boolean loggedIn;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+    
+	@NotBlank 
+	private String username;
+    
+	@NotBlank 
+	private String password;
+    
+	@NotNull 
+	private boolean loggedIn;
     
 	public Admin() {
 		

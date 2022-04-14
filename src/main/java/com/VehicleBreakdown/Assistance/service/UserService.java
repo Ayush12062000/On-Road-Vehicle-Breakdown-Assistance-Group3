@@ -11,4 +11,5 @@ public interface UserService {
 	public List<User> getAllUsers();
 	public User updateUser(User user);
 	public Optional<User> getUserById(Long userId);
+	public User getUserByEmailId(String emailId);
 }

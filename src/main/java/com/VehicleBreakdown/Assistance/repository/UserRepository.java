@@ -7,5 +7,5 @@ import com.VehicleBreakdown.Assistance.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
+	User findByEmailId(String emailId);
 }

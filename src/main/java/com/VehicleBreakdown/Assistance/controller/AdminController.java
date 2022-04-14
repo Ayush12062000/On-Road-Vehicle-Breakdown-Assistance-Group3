@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ import com.VehicleBreakdown.Assistance.repository.AdminRepository;
 import com.VehicleBreakdown.Assistance.service.AdminService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	public AdminService adminService;
@@ -27,22 +28,24 @@ public class AdminController {
 	@Autowired
 	public AdminRepository adminRepository;
 	
-	@PostMapping("/admin/register")
-    public Status registerAdmin(@Valid @RequestBody Admin newAdmin) {
+	@PostMapping("/register")
+    public ResponseEntity<Admin> registerAdmin(@Valid @RequestBody Admin newAdmin) {
         List<Admin> admins = adminRepository.findAll();
         System.out.println("New admin: " + newAdmin.toString());
         for (Admin admin : admins) {
             System.out.println("Registered admin: " + newAdmin.toString());
             if (admin.equals(newAdmin)) {
-                System.out.println("Admin Already exists!");
-                return Status.USER_ALREADY_EXISTS;
+                //System.out.println("Admin Already exists!");
+                System.out.println( Status.USER_ALREADY_EXISTS);
+                return ResponseEntity.ok().body(newAdmin);
             }
         }
         adminRepository.save(newAdmin);
-        return Status.SUCCESS;
+        System.out.println(Status.SUCCESS);
+        return ResponseEntity.ok().body(newAdmin);
     }
     
-    @PostMapping("/admin/login")
+    @PostMapping("/login")
     public Status loginAdmin(@Valid @RequestBody Admin admin) throws AdminNotFoundException {
         List<Admin> admins = adminRepository.findAll();
         for (Admin other : admins) {
@@ -58,7 +61,7 @@ public class AdminController {
         return Status.FAILURE;
     }
     
-    @PostMapping("/admin/logout")
+    @PostMapping("/logout")
     public Status logAdminOut(@Valid @RequestBody Admin admin) throws AdminNotFoundException {
         List<Admin> admins = adminRepository.findAll();
         for (Admin other : admins) {
