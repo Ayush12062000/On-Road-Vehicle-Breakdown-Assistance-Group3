@@ -15,7 +15,10 @@ import com.VehicleBreakdown.Assistance.repository.UserRepository;
 public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private UserRepository userRepository;
-	
+	/*
+	@Autowired
+	private MeachanicRepository mechanicRepository;
+	*/
 	@Autowired
 	private AdminRepository adminRepository;
 	
@@ -33,4 +36,10 @@ public class AdminServiceImpl implements AdminService {
 	public Optional<Admin> getAdminByUsername(String username) {
 		return adminRepository.findByUsername(username);
 	}
+	/*
+	@Override
+	public List<Mechanic> getAllMechanics() {
+		return mechanicRepository.findAll();
+	}
+	*/
 }

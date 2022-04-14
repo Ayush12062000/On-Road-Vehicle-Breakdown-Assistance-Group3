@@ -1,5 +1,7 @@
 package com.VehicleBreakdown.Assistance.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -69,5 +71,5 @@ public class Feedback {
 		return "Feedback [feedbackId=" + feedbackId + ", feedbackMessage=" + feedbackMessage + ", ratings=" + ratings
 				+ ", mechanic=" + mechanic + "]";
 	}
-	
+
 }

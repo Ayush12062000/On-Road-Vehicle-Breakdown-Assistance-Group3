@@ -106,12 +106,11 @@ public class Mechanic {
 		this.feedback = feedback;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Mechanic [mechanicId=" + mechanicId + ", mechanicName=" + mechanicName + ", mechanicPhoneNumber="
 				+ mechanicPhoneNumber + ", mechanicEmailId=" + mechanicEmailId + ", mechanicLocation="
 				+ mechanicLocation + ", mechanicPassword=" + mechanicPassword + ", feedback=" + feedback + "]";
 	}
-	
+
 }
