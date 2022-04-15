@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.VehicleBreakdown.Assistance.exception.AdminNotFoundException;
+import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
-import com.VehicleBreakdown.Assistance.exception.UserNotFoundException;
 import com.VehicleBreakdown.Assistance.model.Admin;
+import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
 import com.VehicleBreakdown.Assistance.service.AdminService;
@@ -98,11 +99,23 @@ public class AdminController {
         throw new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername());
 	}
     
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public Map<String, String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex){
 		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getFieldErrors().forEach(error->errors.put(error.getField(), error.getDefaultMessage()));
 		return errors;
+    }
+    
+    @GetMapping("/viewFeedback")
+	public ResponseEntity<List<Feedback>> viewFeedback() throws FeedbackNotFoundException {
+
+		List<Feedback> viewFeedback = adminService.viewFeedback();
+		if (viewFeedback.isEmpty()) {
+			throw new FeedbackNotFoundException("FeedBack not found:");
+		}
+		return new ResponseEntity<List<Feedback>>(viewFeedback, HttpStatus.OK);
+
 	}
 }

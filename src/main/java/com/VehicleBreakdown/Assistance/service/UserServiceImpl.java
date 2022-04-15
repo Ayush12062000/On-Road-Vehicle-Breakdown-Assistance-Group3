@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
+import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AssistanceRequiredRepository;
@@ -70,6 +71,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<Mechanic> searchMechanicByLocation(String location) {
 		return mechanicRepository.findByMechanicLocation(location);
+	}
+
+	@Override
+	public String giveFeedback(Feedback feedback, long mechanicId, long userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*@Override

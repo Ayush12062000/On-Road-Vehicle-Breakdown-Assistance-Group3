@@ -21,23 +21,13 @@ public class AssistanceRequired {
 
 	private String location;
 	
-	/*@OneToOne(mappedBy="service",cascade = CascadeType.ALL)
-	private Feedback feedback;*/
+	@OneToOne(mappedBy="assiatnceRequired",cascade = CascadeType.ALL)
+	private Feedback feedback;
 	
 	public AssistanceRequired() {}
 
-	
-	public AssistanceRequired(long assistanceId, String assistanceType, long userId, long mechanicId, String location) {
-		super();
-		this.assistanceId = assistanceId;
-		this.assistanceType = assistanceType;
-		this.userId = userId;
-		this.mechanicId = mechanicId;
-		this.location = location;
-	}
 
-
-	/*public AssistanceRequired(long assistanceId, String assistanceType, long userId, long mechanicId, String location,
+	public AssistanceRequired(long assistanceId, String assistanceType, long userId, long mechanicId, String location,
 			Feedback feedback) {
 		this.assistanceId = assistanceId;
 		this.assistanceType = assistanceType;
@@ -45,7 +35,7 @@ public class AssistanceRequired {
 		this.mechanicId = mechanicId;
 		this.location = location;
 		this.feedback = feedback;
-	}*/
+	}
 
 	public long getAssistanceId() {
 		return assistanceId;
@@ -87,7 +77,7 @@ public class AssistanceRequired {
 		this.location = location;
 	}
 
-	/*public Feedback getFeedback() {
+	public Feedback getFeedback() {
 		return feedback;
 	}
 
@@ -99,6 +89,6 @@ public class AssistanceRequired {
 	public String toString() {
 		return "AssistanceRequired [assistanceId=" + assistanceId + ", assistanceType=" + assistanceType + ", userId="
 				+ userId + ", mechanicId=" + mechanicId + ", location=" + location + ", feedback=" + feedback + "]";
-	}*/
+	}
 	
 }

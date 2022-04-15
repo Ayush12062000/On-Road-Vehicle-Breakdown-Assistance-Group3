@@ -17,6 +17,7 @@ public class Feedback {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long feedbackId;
 	
+	private long userId;
 	private String feedbackMessage;
 	private int ratings;
 	
@@ -24,17 +25,21 @@ public class Feedback {
 	@JoinColumn(foreignKey = @ForeignKey(name = "mechanicId"), name = "mechanicId")
 	private Mechanic mechanic;
 	
-	/*@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "assistanceId"), name = "assistanceId")
-	private AssistanceRequired assiatnceRequired;*/
+	private AssistanceRequired assiatnceRequired;
 	
 	public Feedback() {}
 
-	public Feedback(long feedbackId, String feedbackMessage, int ratings, Mechanic mechanic) {
+	public Feedback(long feedbackId, long userId, String feedbackMessage, int ratings, Mechanic mechanic,
+			AssistanceRequired assiatnceRequired) {
+		super();
 		this.feedbackId = feedbackId;
+		this.userId = userId;
 		this.feedbackMessage = feedbackMessage;
 		this.ratings = ratings;
 		this.mechanic = mechanic;
+		this.assiatnceRequired = assiatnceRequired;
 	}
 
 	public long getFeedbackId() {
@@ -67,6 +72,22 @@ public class Feedback {
 
 	public void setMechanic(Mechanic mechanic) {
 		this.mechanic = mechanic;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public AssistanceRequired getAssiatnceRequired() {
+		return assiatnceRequired;
+	}
+
+	public void setAssiatnceRequired(AssistanceRequired assiatnceRequired) {
+		this.assiatnceRequired = assiatnceRequired;
 	}
 
 	@Override
