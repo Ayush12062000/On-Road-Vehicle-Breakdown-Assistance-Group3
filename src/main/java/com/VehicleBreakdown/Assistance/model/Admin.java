@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -15,20 +16,20 @@ public class Admin {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
     
-	@NotBlank 
+	@NotEmpty(message="Username is required")
 	private String username;
     
-	@NotBlank 
+	@NotEmpty(message="Username is required")
 	private String password;
     
-	@NotNull 
+	@NotNull
 	private boolean loggedIn;
     
 	public Admin() {
 		
 	}
 	
-	public Admin(@NotBlank String username, @NotBlank String password) {
+	public Admin(String username, String password) {
 		this.username = username;
 		this.password = password;
 		this.loggedIn = false;
