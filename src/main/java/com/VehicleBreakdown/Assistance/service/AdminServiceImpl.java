@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Feedback;
+import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
 import com.VehicleBreakdown.Assistance.repository.FeedbackRepository;
+import com.VehicleBreakdown.Assistance.repository.MechanicRepository;
 import com.VehicleBreakdown.Assistance.repository.UserRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private FeedbackRepository feedbackRepository;
+	
+	@Autowired
+	private MechanicRepository mechanicRepository;
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -42,5 +47,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Feedback> viewFeedback() {
 		return feedbackRepository.findAll();
+	}
+	
+	@Override
+	public List<Mechanic> getAllMechanics() {
+		return mechanicRepository.findAll();
 	}
 }

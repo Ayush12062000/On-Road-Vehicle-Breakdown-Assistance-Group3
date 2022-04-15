@@ -23,6 +23,7 @@ import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Feedback;
+import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
 import com.VehicleBreakdown.Assistance.service.AdminService;
@@ -116,6 +117,22 @@ public class AdminController {
 			throw new FeedbackNotFoundException("FeedBack not found:");
 		}
 		return new ResponseEntity<List<Feedback>>(viewFeedback, HttpStatus.OK);
-
+	}
+    
+    @GetMapping("/login/showmechanics")
+	public List<Mechanic> getAllMechanics(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
+		List<Admin> admins = adminRepository.findAll();
+        for (Admin other : admins) {
+            if (other.equals(admin)) {
+            	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+            	if(adm.isLoggedIn())
+            		return adminService.getAllMechanics();
+            	else 
+            		throw new InvalidLoginException("Login Required");
+            }
+            else
+            	throw new InvalidLoginException("Invalid Login Credentials");
+        }
+        throw new AdminNotFoundException("No Database found");
 	}
 }

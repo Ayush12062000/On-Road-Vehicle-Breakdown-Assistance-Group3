@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Feedback;
+import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 
 
@@ -13,4 +14,5 @@ public interface AdminService {
 	Admin updateAdmin(Admin admin);
 	Optional<Admin> getAdminByUsername(String username);
 	public List<Feedback> viewFeedback();
+	List<Mechanic> getAllMechanics();
 }
