@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -22,6 +23,10 @@ public class Feedback {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "mechanicId"), name = "mechanicId")
 	private Mechanic mechanic;
+	
+	/*@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(foreignKey = @ForeignKey(name = "assistanceId"), name = "assistanceId")
+	private AssistanceRequired assiatnceRequired;*/
 	
 	public Feedback() {}
 
