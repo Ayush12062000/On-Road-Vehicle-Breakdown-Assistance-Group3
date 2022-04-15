@@ -21,7 +21,7 @@ public class Mechanic {
 	private String mechanicLocation;
 	private String mechanicPassword;
 	
-	@OneToMany(mappedBy="mechanic",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="mechanic",cascade = CascadeType.MERGE)
 	private List<Feedback> feedback;
 	
 	public Mechanic() {}

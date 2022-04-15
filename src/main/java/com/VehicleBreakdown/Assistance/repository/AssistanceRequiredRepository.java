@@ -16,6 +16,6 @@ public interface AssistanceRequiredRepository extends JpaRepository<AssistanceRe
 	
 	public AssistanceRequired getByMechanicId(long mechanicId);
 	
-	public AssistanceRequired findByUserIdAndMechanicId(long mechanicId, long userId);
+	public AssistanceRequired findByUserIdAndMechanicId(long userId, long mechanicId);
 
 }

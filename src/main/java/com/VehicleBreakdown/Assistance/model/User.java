@@ -1,7 +1,5 @@
 package com.VehicleBreakdown.Assistance.model;
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name="user_details")
@@ -100,15 +96,11 @@ public class User {
 		this.loggedIn = loggedIn;
 	}
 	
-	@Override
-	public int hashCode() {
-	    return Objects.hash(userId, userName, phoneNumber, emailId, userPassword, loggedIn);
-	}
 
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName + ", phoneNumber=" + phoneNumber + ", emailId="
-				+ emailId + ", userPassword=" + userPassword + ", loggedIn=" + loggedIn + "]";
+				+ emailId + ", userPassword=" + userPassword + "]";
 	}
 	
 }

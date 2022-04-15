@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.RequestNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
+import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.service.MechanicService;
 
@@ -35,7 +37,7 @@ public class MechanicController {
 	}
 	
 	@GetMapping("/viewRequest/{mechId}")
-	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") int mechanicId) throws RequestNotFoundException
+	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws RequestNotFoundException
 	{
 		List<AssistanceRequired> requestList = mechanicService.viewRequest(mechanicId);
 		if(requestList.isEmpty())
@@ -45,5 +47,13 @@ public class MechanicController {
 		return new ResponseEntity<List<AssistanceRequired>>(requestList, HttpStatus.OK);
 	}
 	
-	//all mechanic view GET
+	@GetMapping("/viewFeedback/{mechId}")
+	public ResponseEntity<List<Feedback>> viewFeedback(@Valid @PathVariable("mechId") long mechanicId) throws FeedbackNotFoundException {
+		
+		List<Feedback> viewFeedback = mechanicService.viewFeedback(mechanicId);
+		if (viewFeedback.isEmpty()) {
+			throw new FeedbackNotFoundException("Feedback not found for the given mechanic id");
+		}
+		return new ResponseEntity<List<Feedback>>(viewFeedback, HttpStatus.OK);
+	}
 }

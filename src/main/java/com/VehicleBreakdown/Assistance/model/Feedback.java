@@ -30,7 +30,7 @@ public class Feedback {
 	private AssistanceRequired assiatnceRequired;
 	
 	public Feedback() {}
-
+	
 	public Feedback(long feedbackId, long userId, String feedbackMessage, int ratings, Mechanic mechanic,
 			AssistanceRequired assiatnceRequired) {
 		super();
@@ -41,6 +41,7 @@ public class Feedback {
 		this.mechanic = mechanic;
 		this.assiatnceRequired = assiatnceRequired;
 	}
+	
 
 	public long getFeedbackId() {
 		return feedbackId;
@@ -66,6 +67,14 @@ public class Feedback {
 		this.ratings = ratings;
 	}
 
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
 	public Mechanic getMechanic() {
 		return mechanic;
 	}
@@ -74,26 +83,12 @@ public class Feedback {
 		this.mechanic = mechanic;
 	}
 
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-
 	public AssistanceRequired getAssiatnceRequired() {
 		return assiatnceRequired;
 	}
 
 	public void setAssiatnceRequired(AssistanceRequired assiatnceRequired) {
 		this.assiatnceRequired = assiatnceRequired;
-	}
-
-	@Override
-	public String toString() {
-		return "Feedback [feedbackId=" + feedbackId + ", feedbackMessage=" + feedbackMessage + ", ratings=" + ratings
-				+ ", mechanic=" + mechanic + "]";
 	}
 	
 }

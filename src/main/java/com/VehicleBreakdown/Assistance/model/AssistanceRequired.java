@@ -21,7 +21,7 @@ public class AssistanceRequired {
 
 	private String location;
 	
-	@OneToOne(mappedBy="assiatnceRequired",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="assiatnceRequired",cascade = CascadeType.MERGE)
 	private Feedback feedback;
 	
 	public AssistanceRequired() {}
