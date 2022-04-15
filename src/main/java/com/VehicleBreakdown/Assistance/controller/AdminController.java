@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.VehicleBreakdown.Assistance.exception.AdminNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.model.Admin;
+import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.Status;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
@@ -86,6 +87,22 @@ public class AdminController {
             	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
             	if(adm.isLoggedIn())
             		return adminService.getAllUsers();
+            	else 
+            		throw new InvalidLoginException("Login Required");
+            }
+            else
+            	throw new InvalidLoginException("Invalid Login Credentials");
+        }
+        throw new AdminNotFoundException("No Database found");
+	}
+    @GetMapping("/login/showmechanics")
+	public List<Mechanic> getAllMechanics(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
+		List<Admin> admins = adminRepository.findAll();
+        for (Admin other : admins) {
+            if (other.equals(admin)) {
+            	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+            	if(adm.isLoggedIn())
+            		return adminService.getAllMechanics();
             	else 
             		throw new InvalidLoginException("Login Required");
             }

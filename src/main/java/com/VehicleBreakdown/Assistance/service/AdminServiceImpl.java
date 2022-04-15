@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.VehicleBreakdown.Assistance.model.Admin;
+import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
+import com.VehicleBreakdown.Assistance.repository.MechanicRepository;
 import com.VehicleBreakdown.Assistance.repository.UserRepository;
 
 @Service
@@ -18,6 +20,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminRepository adminRepository;
+	
+	@Autowired
+	private MechanicRepository mechanicRepository;
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -33,4 +38,10 @@ public class AdminServiceImpl implements AdminService {
 	public Optional<Admin> getAdminByUsername(String username) {
 		return adminRepository.findByUsername(username);
 	}
+	@Override
+	public List<Mechanic> getAllMechanics() {
+		return mechanicRepository.findAll();
+	}
+	
+	
 }
