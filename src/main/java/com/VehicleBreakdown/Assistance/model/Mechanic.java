@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Mechanic {
 	@Id
@@ -21,7 +23,7 @@ public class Mechanic {
 	private String mechanicLocation;
 	private String mechanicPassword;
 	
-	@OneToMany(mappedBy="mechanic",cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy="mechanic",cascade = CascadeType.ALL)
 	private List<Feedback> feedback;
 	
 	public Mechanic() {}

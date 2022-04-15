@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Feedback {
@@ -22,11 +24,13 @@ public class Feedback {
 	private int ratings;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(foreignKey = @ForeignKey(name = "mechanicId"), name = "mechanicId")
+	@JoinColumn(name = "mechanicId")
+	@JsonIgnore
 	private Mechanic mechanic;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(foreignKey = @ForeignKey(name = "assistanceId"), name = "assistanceId")
+	@JoinColumn(name = "assistanceId")
+	@JsonIgnore
 	private AssistanceRequired assiatnceRequired;
 	
 	public Feedback() {}
