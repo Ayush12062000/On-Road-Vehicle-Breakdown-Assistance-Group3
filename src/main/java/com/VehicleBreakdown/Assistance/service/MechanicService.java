@@ -15,7 +15,7 @@ public interface MechanicService {
 	public Mechanic getMechanicByMechanicEmailId(String mechanicEmailId);
 	public Optional<Mechanic> getMechanicByMechanicId(Long mechanicId);
 	
-	public List<AssistanceRequired> viewRequest(long mechanicId);
+	public List<AssistanceRequired> viewRequest(long mechanicId) throws Exception;
 
 	public List<Feedback> viewFeedback(long mechanicId);
 	
