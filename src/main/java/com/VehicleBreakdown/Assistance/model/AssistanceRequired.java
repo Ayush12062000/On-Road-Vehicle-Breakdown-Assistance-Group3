@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class AssistanceRequired {
 	@Id
@@ -22,6 +24,7 @@ public class AssistanceRequired {
 	private String location;
 	
 	@OneToOne(mappedBy="assiatnceRequired",cascade = CascadeType.MERGE)
+	@JsonIgnore
 	private Feedback feedback;
 	
 	public AssistanceRequired() {}

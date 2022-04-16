@@ -25,9 +25,11 @@ public class Mechanic {
 	private String mechanicLocation;
 	private String mechanicPassword;
 	@NotNull 
+	@JsonIgnore
 	private boolean loggedIn;
 	
 	@OneToMany(mappedBy="mechanic",cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Feedback> feedback;
 	
 	public Mechanic() {}

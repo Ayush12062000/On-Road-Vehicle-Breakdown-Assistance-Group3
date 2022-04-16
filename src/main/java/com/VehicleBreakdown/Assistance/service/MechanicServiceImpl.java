@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
+import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
 import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
@@ -32,11 +34,11 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 	
 	@Override
-	public List<AssistanceRequired> viewRequest(long mechanicId) throws Exception {
-		Mechanic mechanic=mechanicRepository.getById(mechanicId);
+	public List<AssistanceRequired> viewRequest(long mechanicId) throws InvalidLoginException, MechanicNotFoundException {
+		Mechanic mechanic= mechanicRepository.getById(mechanicId);
 		if(!mechanic.isLoggedIn())
 		{
-			throw new Exception("Mechanic is not logged in ,please log in first");
+			throw new InvalidLoginException("Mechanic is not logged in ,please log in first");
 		}
 		return assistanceRequiredRepository.findByMechanicId(mechanicId);
 	}

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.VehicleBreakdown.Assistance.exception.AdminNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
+import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
+import com.VehicleBreakdown.Assistance.exception.UserNotFoundException;
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
@@ -86,19 +88,25 @@ public class AdminController {
     }
 	
     @GetMapping("/login/showusers")
-	public ResponseEntity<List<User> > getAllUsers(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
+    public ResponseEntity<List<User> > getAllUsers(@Valid @RequestBody Admin admin) throws Exception{
     	List<Admin> admins = adminRepository.findAll();
-        for (Admin other : admins) {
-            if (other.equals(admin)) {
-            	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
-            	if(adm.isLoggedIn())
-            		return new ResponseEntity<List<User> >(adminService.getAllUsers(), HttpStatus.OK);
-            	else 
-            		throw new InvalidLoginException("Login Required");
-            }
-        }
-        throw new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername());
-	}
+    	for (Admin other : admins) {
+    		if (other.equals(admin)) {
+    			Admin adm = adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+    			if(adm.isLoggedIn()) {
+    				List<User> viewUser = adminService.getAllUsers();
+    				if (viewUser.isEmpty())
+    					throw new UserNotFoundException("No Users Found");
+    				return new ResponseEntity<List<User> >(viewUser, HttpStatus.OK);
+    			}
+    			else
+    				throw new InvalidLoginException("Login Required");
+    		}
+    		else
+    			throw new InvalidLoginException("Invalid Login Credentials");
+    	}
+    	throw new Exception("No Database found");
+    }
     
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -120,19 +128,23 @@ public class AdminController {
 	}
     
     @GetMapping("/login/showmechanics")
-	public List<Mechanic> getAllMechanics(@Valid @RequestBody Admin admin) throws InvalidLoginException, AdminNotFoundException{
-		List<Admin> admins = adminRepository.findAll();
-        for (Admin other : admins) {
-            if (other.equals(admin)) {
-            	Admin adm =  adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
-            	if(adm.isLoggedIn())
-            		return adminService.getAllMechanics();
-            	else 
-            		throw new InvalidLoginException("Login Required");
-            }
-            else
-            	throw new InvalidLoginException("Invalid Login Credentials");
-        }
-        throw new AdminNotFoundException("No Database found");
-	}
+    public ResponseEntity<List<Mechanic> > getAllMechanics(@Valid @RequestBody Admin admin) throws Exception{
+    	List<Admin> admins = adminRepository.findAll();
+    	for (Admin other : admins) {
+    			if (other.equals(admin)) {
+    				Admin adm = adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+    				if(adm.isLoggedIn()) {
+    					List<Mechanic> viewMechanic = adminService.getAllMechanics();
+    					if (viewMechanic.isEmpty())
+    						throw new MechanicNotFoundException("No Mechanics Found");
+    						return new ResponseEntity<List<Mechanic> >(viewMechanic, HttpStatus.OK);
+    						}
+    					else
+    						throw new InvalidLoginException("Login Required");
+    				}
+    			else
+    				throw new InvalidLoginException("Invalid Login Credentials");
+    	}
+    	throw new Exception("No Database found");
+    }
 }

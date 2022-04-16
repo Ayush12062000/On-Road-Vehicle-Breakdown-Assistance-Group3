@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
+import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.RequestNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
@@ -43,7 +44,7 @@ public class MechanicController {
 	}
 	
 	@GetMapping("/viewRequest/{mechId}")
-	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws Exception
+	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws RequestNotFoundException, InvalidLoginException, MechanicNotFoundException
 	{
 		List<AssistanceRequired> requestList = mechanicService.viewRequest(mechanicId);
 		if(requestList.isEmpty())
