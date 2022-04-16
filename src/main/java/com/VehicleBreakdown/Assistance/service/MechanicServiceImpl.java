@@ -1,6 +1,7 @@
 package com.VehicleBreakdown.Assistance.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,8 @@ public class MechanicServiceImpl implements MechanicService {
 	public Mechanic getMechanicByMechanicEmailId(String mechanicEmailId) {
 		return mechanicRepository.findByMechanicEmailId(mechanicEmailId);
 }
-	public Mechanic getMechanicByMechanicId(Long mechanicId) {
-		return mechanicRepository.findByMechanicId(mechanicId);
+	public Optional<Mechanic> getMechanicByMechanicId(Long mechanicId) {
+		return mechanicRepository.findById(mechanicId);
 	}
 
 }

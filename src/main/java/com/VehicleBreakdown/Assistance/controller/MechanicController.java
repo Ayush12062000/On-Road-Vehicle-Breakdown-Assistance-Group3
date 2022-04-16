@@ -1,40 +1,28 @@
 package com.VehicleBreakdown.Assistance.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
-=======
 import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
->>>>>>> 8401ba29a1890aed4882746dfd7629ee1e032fcd
+import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.RequestNotFoundException;
-import com.VehicleBreakdown.Assistance.exception.UserNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
 import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.MechanicLogin;
-import com.VehicleBreakdown.Assistance.model.User;
-import com.VehicleBreakdown.Assistance.model.UserLogin;
 import com.VehicleBreakdown.Assistance.repository.MechanicRepository;
-import com.VehicleBreakdown.Assistance.repository.UserRepository;
 import com.VehicleBreakdown.Assistance.service.MechanicService;
 
 
@@ -65,7 +53,6 @@ public class MechanicController {
 		return new ResponseEntity<List<AssistanceRequired>>(requestList, HttpStatus.OK);
 	}
 	
-<<<<<<< HEAD
 	//all mechanic view GET
 	@GetMapping("/bymechanicid/{id}")
 	public ResponseEntity<Mechanic> getMechanicByMechanicId(@PathVariable(value="id") Long mechanicId)
@@ -92,17 +79,7 @@ public class MechanicController {
 		Mechanic mechanic = mechanicService.getMechanicByMechanicEmailId(mechanicEmailId);
 		return ResponseEntity.ok().body(mechanic);
 	}
-	@PostMapping("/register")
-    public ResponseEntity<String> registerMechanic(@Valid @RequestBody Mechanic newMechanic) {
-        List<Mechanic> mechanics = mechanicRepository.findAll();
-        for (Mechanic mechanic : mechanics) {
-            if (mechanic.getMechanicEmailId().equals(newMechanic.getMechanicEmailId())) {
-            	return new ResponseEntity<String>("Email Already Taken", HttpStatus.BAD_REQUEST);
-            }
-        }
-        mechanicRepository.save(newMechanic);
-        return new ResponseEntity<String>("Registration Successful", HttpStatus.OK);   
-    }
+	
 	 @PostMapping("/login")
 	    public ResponseEntity<String> loginMechanic(@Valid @RequestBody MechanicLogin mechanic) throws MechanicNotFoundException {
 	        List<Mechanic> mechanics = mechanicRepository.findAll();
@@ -137,7 +114,6 @@ public class MechanicController {
 	   
 	  
 	
-=======
 	@GetMapping("/viewFeedback/{mechId}")
 	public ResponseEntity<List<Feedback>> viewFeedback(@Valid @PathVariable("mechId") long mechanicId) throws FeedbackNotFoundException {
 		
@@ -147,5 +123,5 @@ public class MechanicController {
 		}
 		return new ResponseEntity<List<Feedback>>(viewFeedback, HttpStatus.OK);
 	}
->>>>>>> 8401ba29a1890aed4882746dfd7629ee1e032fcd
+
 }
