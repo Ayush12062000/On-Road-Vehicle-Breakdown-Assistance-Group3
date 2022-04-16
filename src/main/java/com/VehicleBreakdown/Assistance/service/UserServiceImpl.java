@@ -102,10 +102,4 @@ public class UserServiceImpl implements UserService{
 		return "Feedback Added";
 	}
 
-	/*@Override
-	public AssistanceRequired checkServiceExist(long userId) {
-		return assistanceRepository.getByUserId(userId);
-	}*/
-	
-	
 }
