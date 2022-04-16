@@ -58,10 +58,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public String sendRequest(AssistanceRequired assistanceRequired) {
 		boolean userinfo = userRepository.existsById(assistanceRequired.getUserId());
+		User user=userRepository.getById(assistanceRequired.getUserId());
+		
 		if(userinfo==false)
         {
         	return "User does not exists. Please register first";
         }
+		if(!user.isLoggedIn())
+		{
+			return "Please login first and then send the request";
+		}
+		
 		boolean mechanicinfo = mechanicRepository.existsById(assistanceRequired.getMechanicId());
 		if(mechanicinfo==false)
         {
@@ -71,15 +78,24 @@ public class UserServiceImpl implements UserService{
 		assistanceRequiredRepository.save(assistanceRequired);
 		return "Service Requested Successfully";
 	}
-
 	@Override
-	public List<Mechanic> searchMechanicByLocation(String location) {
+	public List<Mechanic> searchMechanicByLocation(String location,Long userId) throws Exception {
+		User user=userRepository.getById(userId);
+		if(!user.isLoggedIn())
+		{
+			throw new Exception("You need to login first,please login");
+		}
 		return mechanicRepository.findByMechanicLocation(location);
 	}
 
 	@Override
 	public String giveFeedback(Feedback feedback, long mechanicId, long userId) {
 		Mechanic mechanic=mechanicRepository.getById(mechanicId);
+		User user=userRepository.getById(userId);
+		if(!user.isLoggedIn())
+		{
+			return "You need to login first,please login";
+		}
 		AssistanceRequired ar = assistanceRequiredRepository.findByUserIdAndMechanicId(userId,mechanicId);
 		
 		if(ar== null)
