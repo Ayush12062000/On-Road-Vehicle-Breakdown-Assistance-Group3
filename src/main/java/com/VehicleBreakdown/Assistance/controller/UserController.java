@@ -126,15 +126,22 @@ public class UserController {
 		return new ResponseEntity<String>(addRequest, HttpStatus.OK);
 	}
 	
-	@GetMapping("/searchMechanic/{loca}")
-	public ResponseEntity<List<Mechanic>> searchMechanic(@PathVariable(value="loca") String location)
-			throws MechanicNotFoundException {
-		List<Mechanic> mechanicList = userService.searchMechanicByLocation(location);
+	@GetMapping("/searchMechanic/{loca}/{id}")
+	public ResponseEntity<List<Mechanic>> searchMechanic(@PathVariable(value="loca") String location,@PathVariable(value="id") Long userId)
+			throws Exception {
+		
+		List<Mechanic> mechanicList = userService.searchMechanicByLocation(location,userId);
 		if (mechanicList.isEmpty()) {
 			throw new MechanicNotFoundException("Mechanic does not exist at " + location + " location");
 		}
 		return new ResponseEntity<List<Mechanic>>(mechanicList, HttpStatus.OK);
 	}
+	
+	
+	
+	
+	
+	
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
