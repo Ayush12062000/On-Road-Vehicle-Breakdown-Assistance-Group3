@@ -32,7 +32,12 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 	
 	@Override
-	public List<AssistanceRequired> viewRequest(long mechanicId) {
+	public List<AssistanceRequired> viewRequest(long mechanicId) throws Exception {
+		Mechanic mechanic=mechanicRepository.getById(mechanicId);
+		if(!mechanic.isLoggedIn())
+		{
+			throw new Exception("Mechanic is not logged in ,please log in first");
+		}
 		return assistanceRequiredRepository.findByMechanicId(mechanicId);
 	}
 

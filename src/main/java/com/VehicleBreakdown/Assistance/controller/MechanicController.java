@@ -43,7 +43,7 @@ public class MechanicController {
 	}
 	
 	@GetMapping("/viewRequest/{mechId}")
-	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws RequestNotFoundException
+	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws Exception
 	{
 		List<AssistanceRequired> requestList = mechanicService.viewRequest(mechanicId);
 		if(requestList.isEmpty())
