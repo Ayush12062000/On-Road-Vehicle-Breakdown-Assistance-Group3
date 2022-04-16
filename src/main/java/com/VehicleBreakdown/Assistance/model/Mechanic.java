@@ -1,6 +1,7 @@
 package com.VehicleBreakdown.Assistance.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,6 +24,8 @@ public class Mechanic {
 	private String mechanicEmailId;
 	private String mechanicLocation;
 	private String mechanicPassword;
+	@NotNull 
+	private boolean loggedIn;
 	
 	@OneToMany(mappedBy="mechanic",cascade = CascadeType.ALL)
 	private List<Feedback> feedback;
@@ -37,6 +41,7 @@ public class Mechanic {
 		this.mechanicLocation = mechanicLocation;
 		this.mechanicPassword = mechanicPassword;
 		this.feedback = feedback;
+		this.loggedIn = false;
 	}
 	
 	public long getMechanicId() {
@@ -106,6 +111,17 @@ public class Mechanic {
 
 	public void setFeedback(List<Feedback> feedback) {
 		this.feedback = feedback;
+	}
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+	@Override
+	public int hashCode() {
+	    return Objects.hash(mechanicId, mechanicName, mechanicPhoneNumber, mechanicEmailId, mechanicLocation, mechanicPassword, loggedIn);
 	}
 
 
