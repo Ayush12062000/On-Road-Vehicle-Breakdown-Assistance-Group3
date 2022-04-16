@@ -30,8 +30,12 @@ import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.repository.AdminRepository;
 import com.VehicleBreakdown.Assistance.service.AdminService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/admin")
+@Api(produces="application/json", value="Admin Operations")
 public class AdminController {
 	@Autowired
 	public AdminService adminService;
@@ -40,6 +44,7 @@ public class AdminController {
 	public AdminRepository adminRepository;
 	
 	@PostMapping("/register")
+	@ApiOperation(value="Admin Signup")
     public ResponseEntity<String> registerAdmin(@Valid @RequestBody Admin newAdmin) {
         List<Admin> admins = adminRepository.findAll();
         for (Admin admin : admins) {
@@ -52,6 +57,7 @@ public class AdminController {
     }
     
     @PostMapping("/login")
+    @ApiOperation(value="Admin Login")
     public ResponseEntity<String> loginAdmin(@Valid @RequestBody Admin admin) throws AdminNotFoundException {
         List<Admin> admins = adminRepository.findAll();
         for (Admin other : admins) {
@@ -70,6 +76,7 @@ public class AdminController {
     }
     
     @PostMapping("/logout")
+    @ApiOperation(value="Admin Logout")
     public ResponseEntity<String> logAdminOut(@Valid @RequestBody Admin admin) throws AdminNotFoundException {
         List<Admin> admins = adminRepository.findAll();
         for (Admin other : admins) {
@@ -88,7 +95,9 @@ public class AdminController {
     }
 	
     @GetMapping("/login/showusers")
-    public ResponseEntity<List<User> > getAllUsers(@Valid @RequestBody Admin admin) throws Exception{
+    @ApiOperation(value="Show all users to admin")
+	public ResponseEntity<List<User> > getAllUsers(@Valid @RequestBody Admin admin) throws Exception{
+
     	List<Admin> admins = adminRepository.findAll();
     	for (Admin other : admins) {
     		if (other.equals(admin)) {
@@ -108,16 +117,8 @@ public class AdminController {
     	throw new Exception("No Database found");
     }
     
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex){
-		Map<String, String> errors = new HashMap<>();
-		ex.getBindingResult().getFieldErrors().forEach(error->errors.put(error.getField(), error.getDefaultMessage()));
-		return errors;
-    }
-    
     @GetMapping("/viewFeedback")
+    @ApiOperation(value="Show all feedback to admin")
 	public ResponseEntity<List<Feedback>> viewFeedback() throws FeedbackNotFoundException {
 
 		List<Feedback> viewFeedback = adminService.viewFeedback();
@@ -128,6 +129,7 @@ public class AdminController {
 	}
     
     @GetMapping("/login/showmechanics")
+    @ApiOperation(value="Get all mechanics")
     public ResponseEntity<List<Mechanic> > getAllMechanics(@Valid @RequestBody Admin admin) throws Exception{
     	List<Admin> admins = adminRepository.findAll();
     	for (Admin other : admins) {
@@ -147,4 +149,13 @@ public class AdminController {
     	}
     	throw new Exception("No Database found");
     }
+    
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+   	@ExceptionHandler(MethodArgumentNotValidException.class)
+   	public Map<String, String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex){
+   		Map<String, String> errors = new HashMap<>();
+   		ex.getBindingResult().getFieldErrors().forEach(error->errors.put(error.getField(), error.getDefaultMessage()));
+   		return errors;
+       }
+    
 }
