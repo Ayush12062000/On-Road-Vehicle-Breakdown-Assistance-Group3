@@ -30,8 +30,12 @@ import com.VehicleBreakdown.Assistance.model.UserLogin;
 import com.VehicleBreakdown.Assistance.repository.UserRepository;
 import com.VehicleBreakdown.Assistance.service.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/user")
+@Api(produces="application/json", value="User Operations")
 public class UserController {
 	
 	@Autowired
@@ -41,6 +45,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@PostMapping("/register")
+	@ApiOperation(value="User Signup")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User newUser) {
         List<User> users = userRepository.findAll();
         for (User user : users) {
@@ -53,6 +58,7 @@ public class UserController {
     }
     
     @PostMapping("/login")
+    @ApiOperation(value="User Login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody UserLogin user) throws UserNotFoundException {
         List<User> users = userRepository.findAll();
         for (User other : users) {
@@ -69,6 +75,7 @@ public class UserController {
     }
     
     @PostMapping("/logout")
+    @ApiOperation(value="User Logout")
     public ResponseEntity<String> logUserOut(@Valid @RequestBody UserLogin user) throws UserNotFoundException {
     	List<User> users = userRepository.findAll();
         for (User other : users) {
@@ -85,12 +92,14 @@ public class UserController {
     }
 	
 	@GetMapping("/all")
+	@ApiOperation(value="Get all users")
 	public List<User> getAllUsers()
 	{
 		return userService.getAllUsers();
 	}
 	
 	@GetMapping("/byid/{id}")
+	@ApiOperation(value="Get user by id")
 	public ResponseEntity<User> getUserById(@PathVariable(value="id") Long userId)
 	{
 		User user = userService.getUserById(userId).orElse(null);
@@ -98,6 +107,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/update/byid/{id}")
+	@ApiOperation(value="Update existing user")
 	public ResponseEntity<User> updateUserById(@PathVariable(value="id") Long userId,@Valid @RequestBody User userinfo)
 	{
 		User user = userService.getUserById(userId).orElse(null);
@@ -111,6 +121,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/byemail/{email}")
+	@ApiOperation(value="Get user by email")
 	public ResponseEntity<User> getUserByEmail(@PathVariable(value="email") String emailId)
 	{
 		User user = userService.getUserByEmailId(emailId);
@@ -118,6 +129,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/addRequest")
+	@ApiOperation(value="Add request")
 	public ResponseEntity<String> addRequest(@Valid @RequestBody AssistanceRequired assistanceRequired) {
 		String addRequest = userService.sendRequest(assistanceRequired);
 		if (addRequest == null) {
@@ -127,6 +139,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/searchMechanic/{loca}/{id}")
+	@ApiOperation(value="Search mechanic by location")
 	public ResponseEntity<List<Mechanic>> searchMechanic(@PathVariable(value="loca") String location,@PathVariable(value="id") Long userId)
 			throws Exception {
 		
