@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.UserNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
+import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
 import com.VehicleBreakdown.Assistance.model.User;
 import com.VehicleBreakdown.Assistance.model.UserLogin;
@@ -142,5 +143,15 @@ public class UserController {
 		ex.getBindingResult().getFieldErrors().forEach(error->errors.put(error.getField(), error.getDefaultMessage()));
 		return errors;
 	}
+	
+	@PostMapping("/giveFeedback/{mechId}/{uId}")
+	public ResponseEntity<String> giveNewFeedback(@Valid @PathVariable("mechId") long mechanicId,
+			@PathVariable("uId") long userId, @RequestBody Feedback feedback) {
 
+		String giveFeedback = userService.giveFeedback(feedback, mechanicId, userId);
+		if (giveFeedback == null) {
+			return new ResponseEntity<String>("Feedback not added", HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<String>(giveFeedback, HttpStatus.OK);
+	}
 }
