@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -94,14 +95,11 @@ public class AdminController {
         return new ResponseEntity<String>("Invalid Credentials", HttpStatus.UNAUTHORIZED);
     }
 	
-    @GetMapping("/login/showusers")
+    @GetMapping("/login/showusers/{adminUsername}")
     @ApiOperation(value="Show all users to admin")
-	public ResponseEntity<List<User> > getAllUsers(@Valid @RequestBody Admin admin) throws Exception{
+	public ResponseEntity<List<User> > getAllUsers(@PathVariable(value="adminUsername") String username) throws Exception{
 
-    	List<Admin> admins = adminRepository.findAll();
-    	for (Admin other : admins) {
-    		if (other.equals(admin)) {
-    			Admin adm = adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
+    	Admin adm = adminService.getAdminByUsername(username).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+username));
     			if(adm.isLoggedIn()) {
     				List<User> viewUser = adminService.getAllUsers();
     				if (viewUser.isEmpty())
@@ -110,11 +108,6 @@ public class AdminController {
     			}
     			else
     				throw new InvalidLoginException("Login Required");
-    		}
-    		else
-    			throw new InvalidLoginException("Invalid Login Credentials");
-    	}
-    	throw new Exception("No Database found");
     }
     
     @GetMapping("/viewFeedback")
@@ -128,26 +121,19 @@ public class AdminController {
 		return new ResponseEntity<List<Feedback>>(viewFeedback, HttpStatus.OK);
 	}
     
-    @GetMapping("/login/showmechanics")
+    @GetMapping("/login/showmechanics/{adminUsername}")
     @ApiOperation(value="Get all mechanics")
-    public ResponseEntity<List<Mechanic> > getAllMechanics(@Valid @RequestBody Admin admin) throws Exception{
-    	List<Admin> admins = adminRepository.findAll();
-    	for (Admin other : admins) {
-    			if (other.equals(admin)) {
-    				Admin adm = adminService.getAdminByUsername(admin.getUsername()).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+admin.getUsername()));
-    				if(adm.isLoggedIn()) {
-    					List<Mechanic> viewMechanic = adminService.getAllMechanics();
-    					if (viewMechanic.isEmpty())
-    						throw new MechanicNotFoundException("No Mechanics Found");
-    						return new ResponseEntity<List<Mechanic> >(viewMechanic, HttpStatus.OK);
-    						}
-    					else
-    						throw new InvalidLoginException("Login Required");
-    				}
-    			else
-    				throw new InvalidLoginException("Invalid Login Credentials");
-    	}
-    	throw new Exception("No Database found");
+    public ResponseEntity<List<Mechanic> > getAllMechanics(@PathVariable(value="adminUsername") String username) throws Exception{
+ 
+    	Admin adm = adminService.getAdminByUsername(username).orElseThrow(()->new AdminNotFoundException("No Admin Found with this Username: "+username));
+    	if(adm.isLoggedIn()) {
+    		List<Mechanic> viewMechanic = adminService.getAllMechanics();
+    		if (viewMechanic.isEmpty())
+    				throw new MechanicNotFoundException("No Mechanics Found");
+    		return new ResponseEntity<List<Mechanic> >(viewMechanic, HttpStatus.OK);
+    		}
+    		else
+    			throw new InvalidLoginException("Login Required");
     }
     
     @ResponseStatus(HttpStatus.BAD_REQUEST)
