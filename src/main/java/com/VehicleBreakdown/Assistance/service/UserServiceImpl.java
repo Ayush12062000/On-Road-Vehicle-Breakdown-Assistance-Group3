@@ -79,12 +79,7 @@ public class UserServiceImpl implements UserService{
 		return "Service Requested Successfully";
 	}
 	@Override
-	public List<Mechanic> searchMechanicByLocation(String location,Long userId) throws Exception {
-		User user=userRepository.getById(userId);
-		if(!user.isLoggedIn())
-		{
-			throw new Exception("You need to login first,please login");
-		}
+	public List<Mechanic> searchMechanicByLocation(String location){
 		return mechanicRepository.findByMechanicLocation(location);
 	}
 

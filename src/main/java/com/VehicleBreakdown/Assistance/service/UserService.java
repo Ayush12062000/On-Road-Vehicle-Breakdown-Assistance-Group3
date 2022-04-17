@@ -16,7 +16,6 @@ public interface UserService {
 	public Optional<User> getUserById(Long userId);
 	public User getUserByEmailId(String emailId);
 	public String sendRequest(AssistanceRequired assistanceRequired);
-	public List<Mechanic> searchMechanicByLocation(String location,Long userId) throws Exception;
-	//public AssistanceRequired checkServiceExist(long userId);
+	public List<Mechanic> searchMechanicByLocation(String location);
 	public String giveFeedback(Feedback feedback,long mechanicId,long userId);
 }
