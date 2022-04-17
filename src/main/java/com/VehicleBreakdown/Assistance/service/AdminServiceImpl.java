@@ -29,6 +29,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private MechanicRepository mechanicRepository;
 	
+	@Autowired
+	private MechanicService mechanicService;
+	
 	@Override
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
@@ -52,5 +55,32 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Mechanic> getAllMechanics() {
 		return mechanicRepository.findAll();
+	}
+
+	@Override
+	public String allowOrBlockMechanic(long mechanicId) {
+		if(mechanicRepository.existsById(mechanicId))
+		{
+			Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElse(null);
+			System.out.println(mechanic);
+			long ratingSum = feedbackRepository.sumOfRatings(mechanicId);
+			if(ratingSum == 0)
+			{
+				return "Rating Doesn't exist for the Mechanic with mechanicId:"+mechanicId;
+			}
+			
+			long ratingCount = feedbackRepository.countOfRatings(mechanicId);
+			
+			double averageRating = ratingSum/ratingCount;
+			if(averageRating < 2)
+			{
+				mechanic.setAllowed(false);
+				mechanicRepository.save(mechanic);
+				return "Mechanic Blocked Due to Less Average Rating";
+			}
+			else
+				return "Mechanic allowed, Mechanic has average rating above threshold";
+		}
+			return "Mechanic Doesn't Exist with MechanicId:"+mechanicId;
 	}
 }

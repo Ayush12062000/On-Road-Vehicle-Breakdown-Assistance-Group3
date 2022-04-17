@@ -10,9 +10,10 @@ import com.VehicleBreakdown.Assistance.model.User;
 
 
 public interface AdminService {
-	List<User> getAllUsers();
-	Admin updateAdmin(Admin admin);
-	Optional<Admin> getAdminByUsername(String username);
+	public List<User> getAllUsers();
+	public Admin updateAdmin(Admin admin);
+	public Optional<Admin> getAdminByUsername(String username);
 	public List<Feedback> viewFeedback();
-	List<Mechanic> getAllMechanics();
+	public List<Mechanic> getAllMechanics();
+	public String allowOrBlockMechanic(long mechanicId);
 }

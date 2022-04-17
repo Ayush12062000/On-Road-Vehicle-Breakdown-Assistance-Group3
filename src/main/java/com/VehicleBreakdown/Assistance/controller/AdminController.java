@@ -144,4 +144,11 @@ public class AdminController {
    		return errors;
        }
     
+    @PostMapping("/alloworblockmechanic/{mechanicId}")
+    public ResponseEntity<String> allowOrBlock(@PathVariable(value="mechanicId") long mechId)
+    {
+    	String allowBlock = adminService.allowOrBlockMechanic(mechId);
+    	return new ResponseEntity<String>(allowBlock, HttpStatus.OK);
+    }
+    
 }

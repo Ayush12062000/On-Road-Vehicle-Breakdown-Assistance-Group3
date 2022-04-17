@@ -20,10 +20,10 @@ public class AssistanceRequired {
 	@NotEmpty(message="Assistance on What required?")
 	private String assistanceType;
 
-	@NotEmpty(message="UserId is required")
+	@NotNull
 	private long userId;
 	
-	@NotEmpty(message="MechanicId is required")
+	@NotNull
 	private long mechanicId;
 
 	@NotNull
