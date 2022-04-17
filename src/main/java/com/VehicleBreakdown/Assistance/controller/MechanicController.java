@@ -41,11 +41,20 @@ public class MechanicController {
 	@Autowired
 	private MechanicRepository mechanicRepository;
 	
-	@PostMapping("/new")
+	@PostMapping("/register")
 	@ApiOperation(value="Mechanic Signup")
-	public Mechanic createNewMechanicRegistration(@Valid @RequestBody Mechanic mechanic)
+	public ResponseEntity<String> createNewMechanicRegistration(@Valid @RequestBody Mechanic mechanic)
 	{
-		return mechanicService.mechanicRegistration(mechanic);
+		List<Mechanic> mechList = mechanicRepository.findAll();
+		for(Mechanic m: mechList)
+		{
+			if(m.getMechanicEmailId().equals(mechanic.getMechanicEmailId()))
+			{
+				return new ResponseEntity<String>("Email Already Taken", HttpStatus.BAD_REQUEST);
+			}
+		}
+		mechanicRepository.save(mechanic);
+		return new ResponseEntity<String>("Registration Successful", HttpStatus.OK);   
 	}
 	
 	@GetMapping("/viewRequest/{mechId}")

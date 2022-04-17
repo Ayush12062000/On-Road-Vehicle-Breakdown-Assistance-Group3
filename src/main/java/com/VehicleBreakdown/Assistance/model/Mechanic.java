@@ -39,7 +39,9 @@ public class Mechanic {
 	@Size(min = 5, max = 15, message="Password should be between 8-15 characters")
 	private String mechanicPassword;
 	
-	@NotNull 
+	@JsonIgnore
+	private boolean allowed;
+	 
 	@JsonIgnore
 	private boolean loggedIn;
 	
@@ -47,7 +49,10 @@ public class Mechanic {
 	@JsonIgnore
 	private List<Feedback> feedback;
 	
-	public Mechanic() {}
+	public Mechanic() {
+		this.loggedIn = false;
+		this.allowed = true;
+	}
 	
 	public Mechanic(long mechanicId, String mechanicName, long mechanicPhoneNumber, String mechanicEmailId,
 			String mechanicLocation, String mechanicPassword, List<Feedback> feedback) {
@@ -59,6 +64,7 @@ public class Mechanic {
 		this.mechanicPassword = mechanicPassword;
 		this.feedback = feedback;
 		this.loggedIn = false;
+		this.allowed = true;
 	}
 	
 	public long getMechanicId() {
@@ -129,6 +135,7 @@ public class Mechanic {
 	public void setFeedback(List<Feedback> feedback) {
 		this.feedback = feedback;
 	}
+	
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
@@ -136,17 +143,14 @@ public class Mechanic {
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-	@Override
-	public int hashCode() {
-	    return Objects.hash(mechanicId, mechanicName, mechanicPhoneNumber, mechanicEmailId, mechanicLocation, mechanicPassword, loggedIn);
+
+	
+	public boolean isAllowed() {
+		return allowed;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Mechanic [mechanicId=" + mechanicId + ", mechanicName=" + mechanicName + ", mechanicPhoneNumber="
-				+ mechanicPhoneNumber + ", mechanicEmailId=" + mechanicEmailId + ", mechanicLocation="
-				+ mechanicLocation + ", mechanicPassword=" + mechanicPassword + ", feedback=" + feedback + "]";
+	public void setAllowed(boolean allowed) {
+		this.allowed = allowed;
 	}
 	
 }
