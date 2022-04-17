@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,11 +22,23 @@ public class Mechanic {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long mechanicId;
 	
+	@NotNull
 	private String mechanicName;
+	
+	@NotNull
 	private long mechanicPhoneNumber;
+	
+	@NotEmpty(message="EmailId is required")
+	@Email
 	private String mechanicEmailId;
+	
+	@NotNull
 	private String mechanicLocation;
+	
+	@NotEmpty(message="Password is required")
+	@Size(min = 5, max = 15, message="Password should be between 8-15 characters")
 	private String mechanicPassword;
+	
 	@NotNull 
 	@JsonIgnore
 	private boolean loggedIn;

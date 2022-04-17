@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,12 +17,16 @@ public class AssistanceRequired {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long assistanceId;
 	
+	@NotEmpty(message="Assistance on What required?")
 	private String assistanceType;
 
+	@NotEmpty(message="UserId is required")
 	private long userId;
 	
+	@NotEmpty(message="MechanicId is required")
 	private long mechanicId;
 
+	@NotNull
 	private String location;
 	
 	@OneToOne(mappedBy="assiatnceRequired",cascade = CascadeType.MERGE)
