@@ -41,8 +41,8 @@ public class AdminControllerIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("username", "admin");
-        req_payload.put("password", "root");
+        req_payload.put("username", "admin2");
+        req_payload.put("password", "root1234");
 
         HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 
@@ -59,8 +59,8 @@ public class AdminControllerIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("username", "admin");
-        req_payload.put("password", "root");
+        req_payload.put("username", "admin2");
+        req_payload.put("password", "root1234");
 
         HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 
@@ -88,7 +88,7 @@ public class AdminControllerIntegrationTest {
 	
 	@Test
 	public void testGetAllUsers() {
-		String username = "admin";
+		String username = "admin2";
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		ResponseEntity<String> getResponse = restTemplate.exchange(getRootUrl()+"/login/showusers/"+username, HttpMethod.GET, entity, String.class);
@@ -98,7 +98,7 @@ public class AdminControllerIntegrationTest {
 	
 	@Test
 	public void testGetAllMechanics() {
-		String username = "admin";
+		String username = "admin2";
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		ResponseEntity<String> getResponse = restTemplate.exchange(getRootUrl()+"/login/showmechanics/"+username, HttpMethod.GET, entity, String.class);
@@ -117,7 +117,7 @@ public class AdminControllerIntegrationTest {
 	
 	@Test
 	public void testAllowOrBlock() {
-		long id = 5;
+		long id = 59;
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         Map map = new HashMap<String, String>();
         map.put("Content-Type", "application/json");
@@ -125,8 +125,8 @@ public class AdminControllerIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("username", "admin");
-        req_payload.put("password", "root");
+        req_payload.put("username", "admin2");
+        req_payload.put("password", "root1234");
 
         HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 
