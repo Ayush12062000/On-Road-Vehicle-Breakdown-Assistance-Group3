@@ -31,6 +31,7 @@ public class FeedbackControllerIntegrationTest {
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null,headers);
 		ResponseEntity<String> response = restTemplate.exchange(getRootUrl()+"/feedback/all",HttpMethod.GET,entity,String.class);
+		System.out.println(response);
 		assertNotNull(response.getBody());
 	}
 }
