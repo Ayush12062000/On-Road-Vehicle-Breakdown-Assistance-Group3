@@ -3,6 +3,7 @@ package com.VehicleBreakdown.Assistance.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.VehicleBreakdown.Assistance.exception.BlockByAdminException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
@@ -17,9 +18,9 @@ public interface MechanicService {
 	public Mechanic getMechanicByMechanicEmailId(String mechanicEmailId);
 	public Optional<Mechanic> getMechanicByMechanicId(Long mechanicId);
 	
-	public List<AssistanceRequired> viewRequest(long mechanicId) throws InvalidLoginException, MechanicNotFoundException;
+	public List<AssistanceRequired> viewRequest(long mechanicId) throws InvalidLoginException, MechanicNotFoundException, BlockByAdminException;
 
-	public List<Feedback> viewFeedback(long mechanicId);
+	public List<Feedback> viewFeedback(long mechanicId) throws BlockByAdminException, InvalidLoginException;
 	
 
 	//public boolean loginMechanic(String email, String password);

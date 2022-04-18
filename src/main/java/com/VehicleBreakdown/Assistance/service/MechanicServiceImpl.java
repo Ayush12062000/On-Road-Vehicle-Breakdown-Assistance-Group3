@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.VehicleBreakdown.Assistance.exception.BlockByAdminException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.model.AssistanceRequired;
@@ -34,19 +35,31 @@ public class MechanicServiceImpl implements MechanicService {
 	}
 	
 	@Override
-	public List<AssistanceRequired> viewRequest(long mechanicId) throws InvalidLoginException, MechanicNotFoundException {
+	public List<AssistanceRequired> viewRequest(long mechanicId) throws InvalidLoginException, MechanicNotFoundException, BlockByAdminException {
 		Mechanic mechanic= mechanicRepository.getById(mechanicId);
 		if(!mechanic.isLoggedIn())
 		{
 			throw new InvalidLoginException("Mechanic is not logged in ,please log in first");
 		}
+		if(!mechanic.isAllowed())
+		{
+			throw new BlockByAdminException("You cannot view Request, You are blocked by Admin, Contact Admin for futher Details");
+		}
 		return assistanceRequiredRepository.findByMechanicId(mechanicId);
 	}
 
 	@Override
-	public List<Feedback> viewFeedback(long mechanicId) {
-		Mechanic m=mechanicRepository.getById(mechanicId);
-		return feedbackRepository.findByMechanic(m);
+	public List<Feedback> viewFeedback(long mechanicId) throws BlockByAdminException, InvalidLoginException {
+		Mechanic mechanic=mechanicRepository.getById(mechanicId);
+		if(!mechanic.isLoggedIn())
+		{
+			throw new InvalidLoginException("Mechanic is not logged in ,please log in first");
+		}
+		if(!mechanic.isAllowed())
+		{
+			throw new BlockByAdminException("You cannot view Feedback, You are blocked by Admin, Contact Admin for futher Details");
+		}
+		return feedbackRepository.findByMechanic(mechanic);
 	}
 	@Override
 	public Mechanic updateMechanic(Mechanic mechanic) {

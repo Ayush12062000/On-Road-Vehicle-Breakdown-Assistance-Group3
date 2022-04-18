@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.VehicleBreakdown.Assistance.exception.BlockByAdminException;
 import com.VehicleBreakdown.Assistance.exception.FeedbackNotFoundException;
 import com.VehicleBreakdown.Assistance.exception.InvalidLoginException;
 import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
@@ -59,7 +60,7 @@ public class MechanicController {
 	
 	@GetMapping("/viewRequest/{mechId}")
 	@ApiOperation(value="View all requests from users")
-	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws RequestNotFoundException, InvalidLoginException, MechanicNotFoundException
+	public ResponseEntity<List<AssistanceRequired>> viewingRequest(@PathVariable("mechId") long mechanicId) throws RequestNotFoundException, InvalidLoginException, MechanicNotFoundException, BlockByAdminException
 	{
 		List<AssistanceRequired> requestList = mechanicService.viewRequest(mechanicId);
 		if(requestList.isEmpty())
@@ -136,7 +137,7 @@ public class MechanicController {
 	   
 	@GetMapping("/viewFeedback/{mechId}")
 	@ApiOperation(value="View Feedback")
-	public ResponseEntity<List<Feedback>> viewFeedback(@Valid @PathVariable("mechId") long mechanicId) throws FeedbackNotFoundException {
+	public ResponseEntity<List<Feedback>> viewFeedback(@Valid @PathVariable("mechId") long mechanicId) throws FeedbackNotFoundException, BlockByAdminException, InvalidLoginException {
 		
 		List<Feedback> viewFeedback = mechanicService.viewFeedback(mechanicId);
 		if (viewFeedback.isEmpty()) {
