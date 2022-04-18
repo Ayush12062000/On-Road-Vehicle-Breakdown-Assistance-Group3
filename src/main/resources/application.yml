@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: ayush1234
+    password: root
     url: jdbc:postgresql://localhost:5432/OnRoadVehicleBreakdownAssistanceDatabase
     username: postgres
   jpa:

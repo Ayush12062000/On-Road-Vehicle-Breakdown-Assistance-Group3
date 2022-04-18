@@ -73,7 +73,7 @@ public class AdminController {
             	return new ResponseEntity<String>("Login Successful", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<String>("Invalid Login", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<String>("Invalid Login", HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("/logout")
@@ -92,7 +92,7 @@ public class AdminController {
             	return new ResponseEntity<String>("Logout Successful", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<String>("Invalid Credentials", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<String>("Invalid Credentials", HttpStatus.BAD_REQUEST);
     }
 	
     @GetMapping("/login/showusers/{adminUsername}")
@@ -147,8 +147,8 @@ public class AdminController {
     @PostMapping("/alloworblockmechanic/{mechanicId}")
     public ResponseEntity<String> allowOrBlock(@PathVariable(value="mechanicId") long mechId)
     {
-    	String allowBlock = adminService.allowOrBlockMechanic(mechId);
-    	return new ResponseEntity<String>(allowBlock, HttpStatus.OK);
+    	ResponseEntity<String> allowBlock = adminService.allowOrBlockMechanic(mechId);
+    	return allowBlock;
     }
     
 }

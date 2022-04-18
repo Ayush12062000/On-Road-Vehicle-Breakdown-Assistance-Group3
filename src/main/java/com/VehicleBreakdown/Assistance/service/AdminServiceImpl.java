@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.VehicleBreakdown.Assistance.model.Admin;
@@ -58,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public String allowOrBlockMechanic(long mechanicId) {
+	public ResponseEntity<String> allowOrBlockMechanic(long mechanicId) {
 		if(mechanicRepository.existsById(mechanicId))
 		{
 			Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElse(null);
@@ -66,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
 			long ratingSum = feedbackRepository.sumOfRatings(mechanicId);
 			if(ratingSum == 0)
 			{
-				return "Rating Doesn't exist for the Mechanic with mechanicId:"+mechanicId;
+				return new ResponseEntity<String>("Rating Doesn't exist for the Mechanic with mechanicId:"+mechanicId, HttpStatus.BAD_REQUEST);
 			}
 			
 			long ratingCount = feedbackRepository.countOfRatings(mechanicId);
@@ -76,11 +78,11 @@ public class AdminServiceImpl implements AdminService {
 			{
 				mechanic.setAllowed(false);
 				mechanicRepository.save(mechanic);
-				return "Mechanic Blocked Due to Less Average Rating";
+				return new ResponseEntity<String>("Mechanic Blocked Due to Less Average Rating", HttpStatus.BAD_REQUEST);
 			}
 			else
-				return "Mechanic allowed, Mechanic has average rating above threshold";
+				return new ResponseEntity<String>("Mechanic allowed, Mechanic has average rating above threshold", HttpStatus.OK);
 		}
-			return "Mechanic Doesn't Exist with MechanicId:"+mechanicId;
+			return new ResponseEntity<String>("Mechanic Doesn't Exist with MechanicId:"+mechanicId, HttpStatus.BAD_REQUEST);
 	}
 }
