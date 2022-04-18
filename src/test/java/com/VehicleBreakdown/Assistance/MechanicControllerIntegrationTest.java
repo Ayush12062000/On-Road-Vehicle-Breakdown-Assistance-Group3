@@ -81,7 +81,7 @@ public class MechanicControllerIntegrationTest {
 	@Test
 	public void testViewFeedback()
 	{
-		long id = 59;
+		long id = 25;
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<List<Feedback>> entity = new HttpEntity<List<Feedback>>(null, headers);
 		ResponseEntity<List> getResponse = restTemplate.exchange(getRootUrl()+"/viewFeedback/"+id, HttpMethod.GET, entity, List.class);
