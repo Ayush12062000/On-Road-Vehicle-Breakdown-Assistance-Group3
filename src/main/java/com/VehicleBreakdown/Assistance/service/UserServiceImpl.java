@@ -70,10 +70,15 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		boolean mechanicinfo = mechanicRepository.existsById(assistanceRequired.getMechanicId());
+		Mechanic mechanic=mechanicRepository.getById(assistanceRequired.getMechanicId());
 		if(mechanicinfo==false)
         {
         	return "Mechanic does not exists. Please register first";
         }
+		if(!(assistanceRequired.getLocation().equals(mechanic.getMechanicLocation())))
+		{
+			return "selected Mechanic is not present in location specified by user";
+		}
 		
 		assistanceRequiredRepository.save(assistanceRequired);
 		return "Service Requested Successfully";
