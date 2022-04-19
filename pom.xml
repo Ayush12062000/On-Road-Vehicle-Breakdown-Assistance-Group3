@@ -63,13 +63,20 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
-		<dependency> 
-    		<groupId>org.sonarsource.scanner.maven</groupId> 
-    		<artifactId>sonar-maven-plugin</artifactId> 
-    		<version>3.2</version> 
-    	</dependency>
 	</dependencies>
-
+	
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<activation> <activeByDefault>true</activeByDefault> </activation>
+			<properties> <!-- Optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.host.url>http://localhost:9000</sonar.host.url>
+				<sonar.login>admin</sonar.login>
+				<sonar.password>ayush1234</sonar.password>
+			</properties>
+		</profile>
+	</profiles>
+	
 	<build>
 		<plugins>
 			<plugin>
