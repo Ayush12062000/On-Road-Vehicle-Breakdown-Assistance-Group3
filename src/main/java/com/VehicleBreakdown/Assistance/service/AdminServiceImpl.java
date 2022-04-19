@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.VehicleBreakdown.Assistance.exception.MechanicNotFoundException;
 import com.VehicleBreakdown.Assistance.model.Admin;
 import com.VehicleBreakdown.Assistance.model.Feedback;
 import com.VehicleBreakdown.Assistance.model.Mechanic;
@@ -60,10 +61,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<String> allowOrBlockMechanic(long mechanicId) {
+	public ResponseEntity<String> allowOrBlockMechanic(long mechanicId) throws MechanicNotFoundException {
 		if(mechanicRepository.existsById(mechanicId))
 		{
-			Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElse(null);
+			Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElseThrow(()-> new MechanicNotFoundException("Mechanic Not Found"));
 			System.out.println(mechanic);
 			long ratingSum = feedbackRepository.sumOfRatings(mechanicId);
 			if(ratingSum == 0)
@@ -73,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
 			
 			long ratingCount = feedbackRepository.countOfRatings(mechanicId);
 			
-			double averageRating = ratingSum/ratingCount;
+			double averageRating = (double)(ratingSum/ratingCount);
 			if(averageRating < 2)
 			{
 				mechanic.setAllowed(false);

@@ -145,7 +145,7 @@ public class AdminController {
        }
     
     @PostMapping("/alloworblockmechanic/{mechanicId}")
-    public ResponseEntity<String> allowOrBlock(@PathVariable(value="mechanicId") long mechId)
+    public ResponseEntity<String> allowOrBlock(@PathVariable(value="mechanicId") long mechId) throws MechanicNotFoundException
     {
     	ResponseEntity<String> allowBlock = adminService.allowOrBlockMechanic(mechId);
     	return allowBlock;

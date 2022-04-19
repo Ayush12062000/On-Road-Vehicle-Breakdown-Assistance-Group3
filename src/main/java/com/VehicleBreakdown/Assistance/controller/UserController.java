@@ -108,9 +108,9 @@ public class UserController {
 	
 	@PutMapping("/update/byid/{id}")
 	@ApiOperation(value="Update existing user")
-	public ResponseEntity<User> updateUserById(@PathVariable(value="id") Long userId,@Valid @RequestBody User userinfo)
+	public ResponseEntity<User> updateUserById(@PathVariable(value="id") Long userId,@Valid @RequestBody User userinfo) throws UserNotFoundException
 	{
-		User user = userService.getUserById(userId).orElse(null);
+		User user = userService.getUserById(userId).orElseThrow(()-> new UserNotFoundException("User not Found"));
 		user.setEmailId(userinfo.getEmailId());
 		user.setPhoneNumber(userinfo.getPhoneNumber());
 		user.setUserName(userinfo.getUserName());

@@ -81,9 +81,9 @@ public class MechanicController {
 	
 	@PutMapping("/update/bymechanicid/{id}")
 	@ApiOperation(value="Update existing mechanic")
-	public ResponseEntity<Mechanic> updateMechanicByMechanicId(@PathVariable(value="id") Long mechanicId,@Valid @RequestBody Mechanic mechanicinfo)
+	public ResponseEntity<Mechanic> updateMechanicByMechanicId(@PathVariable(value="id") Long mechanicId,@Valid @RequestBody Mechanic mechanicinfo) throws MechanicNotFoundException
 	{
-		Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElse(null);
+		Mechanic mechanic = mechanicService.getMechanicByMechanicId(mechanicId).orElseThrow(()-> new MechanicNotFoundException("Mechanic not Found"));
 		mechanic.setMechanicEmailId(mechanicinfo.getMechanicEmailId());
 		mechanic.setMechanicPhoneNumber(mechanicinfo.getMechanicPhoneNumber());
 		mechanic.setMechanicName(mechanicinfo.getMechanicName());
