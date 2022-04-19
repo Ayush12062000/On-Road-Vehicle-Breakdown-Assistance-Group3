@@ -28,10 +28,13 @@ import com.VehicleBreakdown.Assistance.repository.MechanicRepository;
 
 @SpringBootTest(classes = OnRoadVehicleBreakdownAssistanceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserControlleIntegrationTest {
+	
 	@Autowired
 	private TestRestTemplate restTemplate;
+	
 	@Autowired
 	private AssistanceRequiredRepository assistanceRequiredRepository;
+	
 	@Autowired
 	private MechanicRepository mechanicRepository;
 	
@@ -42,6 +45,7 @@ class UserControlleIntegrationTest {
 	{
 		return "http://localhost:"+port+"/user";
 	}
+	
 	@Test
 	void testUserRegistration() {
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
@@ -51,10 +55,10 @@ class UserControlleIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("userName","Pantu");
-		req_payload.put("emailId", "pantu@gmail.com");
-		req_payload.put("phoneNumber", 1423188976);
-		req_payload.put("userPassword", "pantu1234");
+        req_payload.put("userName","Pinky");
+		req_payload.put("emailId", "pinky@gmail.com");
+		req_payload.put("phoneNumber", 1675188976);
+		req_payload.put("userPassword", "pink1234");
 		req_payload.put("loggedIn", false);
 		
 
@@ -71,14 +75,14 @@ class UserControlleIntegrationTest {
 		map.put("Content-Type", "application/json");
 		headers.setAll(map);
 		Map req_payload = new HashMap();
-		req_payload.put("emailId", "Test@gmail.com");
-		req_payload.put("userPassword", "password");
+		req_payload.put("emailId", "pinky@gmail.com");
+		req_payload.put("userPassword", "pink1234");
 		HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 		ResponseEntity<?> response = new RestTemplate().postForEntity(getRootUrl()+"/login", request, String.class);
 		assertNotNull(response.getBody());
 	}
-	@Test
 	
+	@Test
 	void testLogoutUser()
 	{
 		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
@@ -86,13 +90,14 @@ class UserControlleIntegrationTest {
 		map.put("Content-Type", "application/json");
 		headers.setAll(map);
 		Map req_payload = new HashMap();
-		req_payload.put("emailId", "Test@gmail.com");
-		req_payload.put("userPassword", "password");
+		req_payload.put("emailId", "pinky@gmail.com");
+		req_payload.put("userPassword", "pink1234");
 		HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 		ResponseEntity<?> response = new RestTemplate().postForEntity(getRootUrl()+"/logout", request, String.class);
 		assertNotNull(response.getBody());
 		
 	}
+	
 	@Test
 	void testSearchMechanicByLocation()
 	{	
@@ -103,6 +108,7 @@ class UserControlleIntegrationTest {
 	System.out.println(getResponse);
 	assertEquals(200, getResponse.getStatusCodeValue());
 	}
+	
 	@Test
 	void testaddRequest()
 	{
@@ -157,6 +163,7 @@ class UserControlleIntegrationTest {
 		assertNotNull(response.getBody());
 		
 	}
+	
 	@Test
 	void testGetAll()
 	{
@@ -166,10 +173,11 @@ class UserControlleIntegrationTest {
 		System.out.println(getResponse);
 		assertEquals(200, getResponse.getStatusCodeValue());
 	}
+	
 	@Test
 	void testGetUserById()
 	{
-		Long id=23L;
+		Long id=52L;
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		ResponseEntity<String> getResponse = restTemplate.exchange(getRootUrl()+"/byid/"+id, HttpMethod.GET, entity, String.class);
@@ -177,6 +185,7 @@ class UserControlleIntegrationTest {
 		assertEquals(200, getResponse.getStatusCodeValue());
 		
 	}
+	
 	@Test
 	void testGetUserByEmailId()
 	{
@@ -188,6 +197,7 @@ class UserControlleIntegrationTest {
 		assertEquals(200, getResponse.getStatusCodeValue());
 		
 	}
+	
 	@Test
 	public void testUpdateUser()
 	{

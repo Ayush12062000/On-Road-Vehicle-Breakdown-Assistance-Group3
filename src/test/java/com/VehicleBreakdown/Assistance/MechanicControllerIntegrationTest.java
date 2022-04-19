@@ -124,8 +124,8 @@ public class MechanicControllerIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("mechanicEmailId", "lucky@gmail.com");
-        req_payload.put("mechanicPassword", "lucky1234");
+        req_payload.put("mechanicEmailId", "harshu@hotmail.com");
+        req_payload.put("mechanicPassword", "harshu1234");
         
         HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 
