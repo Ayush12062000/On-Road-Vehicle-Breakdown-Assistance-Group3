@@ -110,7 +110,6 @@ public class MechanicController {
 	        	Mechanic m =  mechanicRepository.getMechanicByMechanicEmailId(mechanic.getMechanicEmailId()).orElseThrow(()->new MechanicNotFoundException("No Mechanic Found with this Mechanicname: "+mechanic.getMechanicEmailId()));            	
 	        	if(!m.isAllowed())
 	        		throw new BlockByAdminException("Unable to login, you are blocked by admin. Contact admin for futher details.");
-	        		//return new ResponseEntity<String>("Unable to login, you are blocked by admin. Contact admin for futher details.", HttpStatus.BAD_REQUEST);
 	        	if(m.isLoggedIn())
 	        		return new ResponseEntity<String>("Already Logged in", HttpStatus.BAD_REQUEST);
 	        	m.setLoggedIn(true);
