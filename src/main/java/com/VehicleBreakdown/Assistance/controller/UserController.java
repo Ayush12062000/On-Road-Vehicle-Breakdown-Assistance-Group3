@@ -63,7 +63,7 @@ public class UserController {
         List<User> users = userRepository.findAll();
         for (User other : users) {
             if (other.getEmailId().equals(user.getEmailId()) && other.getUserPassword().equals(user.getUserPassword())) {
-            	User us =  userRepository.getUserByEmailId(user.getEmailId()).orElseThrow(()->new UserNotFoundException("No User Found with this Username: "+user.getEmailId()));            	if(us.isLoggedIn())
+            	User us =  userRepository.getUserByEmailId(user.getEmailId()).orElseThrow(()->new UserNotFoundException("No User Found with this Username: "+user.getEmailId()));            
             	if(us.isLoggedIn())
             		return new ResponseEntity<String>("Already Logged in", HttpStatus.BAD_REQUEST);
             	us.setLoggedIn(true);
@@ -71,7 +71,7 @@ public class UserController {
             	return new ResponseEntity<String>("Login Successful", HttpStatus.OK);
             }
         }
-        return new ResponseEntity<String>("Invalid Login", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<String>("Invalid Login", HttpStatus.BAD_REQUEST);
     }
     
     @PostMapping("/logout")
