@@ -44,6 +44,10 @@ public class MechanicLogin {
 	    MechanicLogin mechanic = (MechanicLogin) obj;
 	    return Objects.equals(mechanicEmailId, mechanic.mechanicEmailId) && Objects.equals(mechanicPassword, mechanic.mechanicPassword);
 	}
+	@Override
+	public int hashCode() {
+	    return Objects.hash(mechanicEmailId,mechanicPassword);
+	}
 	
 	@Override
 	public String toString() {

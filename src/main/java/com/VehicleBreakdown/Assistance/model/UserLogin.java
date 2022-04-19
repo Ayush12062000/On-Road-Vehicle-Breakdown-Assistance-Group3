@@ -45,6 +45,11 @@ public class UserLogin {
 	}
 	
 	@Override
+	public int hashCode() {
+	    return Objects.hash(emailId, userPassword);
+	}
+	
+	@Override
 	public String toString() {
 		return "UserLogin [emailId=" + emailId + ", userPassword=" + userPassword + "]";
 	}
