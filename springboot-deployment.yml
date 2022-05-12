@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: on-road-vehicle-breakdown
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: on-road-vehicle-breakdown
+  replicas: 1
+  template:
+    metadata:
+      name: on-road-vehicle-breakdown
+      labels:
+        app: on-road-vehicle-breakdown
+    spec:
+      containers:
+      - name: on-road-vehicle-breakdown
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-secrets
+                 key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                 name: postgres-secrets
+                 key: password
+          - name: POSTGRES_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: hostname-config
+                key: postgres_host
+        image: ayush12062000/on_road_vehicle_breakdown:roadassistance2
