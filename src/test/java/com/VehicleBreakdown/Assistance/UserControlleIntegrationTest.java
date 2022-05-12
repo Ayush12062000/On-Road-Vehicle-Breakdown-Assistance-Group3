@@ -55,10 +55,10 @@ class UserControlleIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("userName","Pinky");
-		req_payload.put("emailId", "pinky@gmail.com");
-		req_payload.put("phoneNumber", 1675188976);
-		req_payload.put("userPassword", "pink1234");
+        req_payload.put("userName","Pappu");
+		req_payload.put("emailId", "pappu@gmail.com");
+		req_payload.put("phoneNumber", 1175188976);
+		req_payload.put("userPassword", "pappu1234");
 		req_payload.put("loggedIn", false);
 		
 
@@ -75,8 +75,8 @@ class UserControlleIntegrationTest {
 		map.put("Content-Type", "application/json");
 		headers.setAll(map);
 		Map req_payload = new HashMap();
-		req_payload.put("emailId", "pinky@gmail.com");
-		req_payload.put("userPassword", "pink1234");
+		req_payload.put("emailId", "pappu@gmail.com");
+		req_payload.put("userPassword", "pappu1234");
 		HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 		ResponseEntity<?> response = new RestTemplate().postForEntity(getRootUrl()+"/login", request, String.class);
 		assertNotNull(response.getBody());
@@ -90,8 +90,8 @@ class UserControlleIntegrationTest {
 		map.put("Content-Type", "application/json");
 		headers.setAll(map);
 		Map req_payload = new HashMap();
-		req_payload.put("emailId", "pinky@gmail.com");
-		req_payload.put("userPassword", "pink1234");
+		req_payload.put("emailId", "pappu@gmail.com");
+		req_payload.put("userPassword", "pappu1234");
 		HttpEntity<?> request = new HttpEntity<>(req_payload, headers);
 		ResponseEntity<?> response = new RestTemplate().postForEntity(getRootUrl()+"/logout", request, String.class);
 		assertNotNull(response.getBody());
@@ -120,9 +120,9 @@ class UserControlleIntegrationTest {
         headers.setAll(map);
 
         Map req_payload = new HashMap();
-        req_payload.put("assistanceType","Tire Puncture");
-		req_payload.put("userId", 23);
-		req_payload.put("mechanicId",25);
+        req_payload.put("assistanceType","Tyre Puncture");
+		req_payload.put("userId", 19);
+		req_payload.put("mechanicId",18);
 		req_payload.put("location", "Malad");
 		
 		
